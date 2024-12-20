@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        REGISTRY = 'cr.yandex/crprmuig7ls6e7kr82qn/todo-registry'
+        BUILD_NUMBER = "${env.BUILD_NUMBER}"
     }
 
     stages {
@@ -43,8 +43,8 @@ pipeline {
         stage('Build and Push Backend Docker Image') {
             steps {
                 dir('todo-backend') {
-                    sh "docker build -t ${REGISTRY}/todo-backend:${BUILD_NUMBER} ."
-                    sh "docker push ${REGISTRY}/todo-backend:${BUILD_NUMBER}"
+                    sh "docker build -t cr.yandex/crprmuig7ls6e7kr82qn/todo-registry/todo-backend:${BUILD_NUMBER} ."
+                    sh "docker push cr.yandex/crprmuig7ls6e7kr82qn/todo-registry/todo-backend:${BUILD_NUMBER}"
                 }
             }
         }
@@ -52,19 +52,18 @@ pipeline {
         stage('Build and Push Frontend Docker Image') {
             steps {
                 dir('todo-frontend') {
-                    sh "docker build -t ${REGISTRY}/todo-frontend:${BUILD_NUMBER} ."
-                    sh "docker push ${REGISTRY}/todo-frontend:${BUILD_NUMBER}"
+                    sh "docker build -t cr.yandex/crprmuig7ls6e7kr82qn/todo-registry/todo-frontend:${BUILD_NUMBER} ."
+                    sh "docker push cr.yandex/crprmuig7ls6e7kr82qn/todo-registry/todo-frontend:${BUILD_NUMBER}"
                 }
             }
         }
-    }
 
-    post {
-        success {
-            echo 'Pipeline completed successfully!'
-        }
-        failure {
-            echo 'Pipeline failed. Check the logs for errors.'
+        stage('Deploy with Docker Compose') {
+            steps {
+                sh """
+                BUILD_NUMBER=${BUILD_NUMBER} docker-compose up -d
+                """
+            }
         }
     }
 }
