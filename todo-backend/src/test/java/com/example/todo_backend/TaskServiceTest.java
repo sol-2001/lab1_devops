@@ -8,9 +8,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
 
+@ActiveProfiles("test")
 public class TaskServiceTest {
 
     private TaskRepository repo = Mockito.mock(TaskRepository.class);

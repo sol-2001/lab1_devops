@@ -19,7 +19,7 @@ resource "yandex_compute_instance" "vm" {
 
   boot_disk {
     initialize_params {
-      image_id = "fd8q1v5c24etq1v5rjfj" # ID образа Ubuntu 22.04
+      image_id = "fd82odtq5h79jo7ffss3" # ID образа Ubuntu 24.04
       size     = 20
     }
   }
@@ -54,3 +54,29 @@ resource "yandex_compute_instance" "vm" {
   }
 }
 
+
+resource "yandex_compute_instance" "jenkins_vm" {
+  name = "jenkins-vm"
+  zone = "ru-central1-a"
+
+  resources {
+    cores  = 2
+    memory = 4
+  }
+
+  boot_disk {
+    initialize_params {
+      image_id = "fd82odtq5h79jo7ffss3" # Ubuntu 22.04 например
+      size     = 20
+    }
+  }
+
+  network_interface {
+    subnet_id = yandex_vpc_subnet.default.id
+    nat       = true
+  }
+
+  metadata = {
+    ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
+  }
+}
