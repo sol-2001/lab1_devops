@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        REGISTRY = 'cr.yandex/crprmuig7ls6e7kr82qn/todo-registry'
+    }
+
     stages {
         stage('Test Backend') {
             steps {
@@ -27,14 +31,40 @@ pipeline {
             }
         }
 
-
-        stage('Build and Push Docker Image') {
+        stage('Build Frontend') {
             steps {
-                dir('todo-backend') {
-                    sh "docker build -t cr.yandex/crprmuig7ls6e7kr82qn/todo-registry/todo-backend:${BUILD_NUMBER} ."
-                    sh "docker push cr.yandex/crprmuig7ls6e7kr82qn/todo-registry/todo-backend:${BUILD_NUMBER}"
+                dir('todo-frontend') {
+                    sh 'npm install'
+                    sh 'npm run build'
                 }
             }
+        }
+
+        stage('Build and Push Backend Docker Image') {
+            steps {
+                dir('todo-backend') {
+                    sh "docker build -t ${REGISTRY}/todo-backend:${BUILD_NUMBER} ."
+                    sh "docker push ${REGISTRY}/todo-backend:${BUILD_NUMBER}"
+                }
+            }
+        }
+
+        stage('Build and Push Frontend Docker Image') {
+            steps {
+                dir('todo-frontend') {
+                    sh "docker build -t ${REGISTRY}/todo-frontend:${BUILD_NUMBER} ."
+                    sh "docker push ${REGISTRY}/todo-frontend:${BUILD_NUMBER}"
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed. Check the logs for errors.'
         }
     }
 }
