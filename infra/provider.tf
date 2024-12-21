@@ -12,7 +12,6 @@ provider "yandex" {
   service_account_key_file = "/home/danil/key.json"
   cloud_id  = "b1g3b76i0s0742l6fm44"
   folder_id = "b1g86p5vb1ntkb2k1877"
-  # Можно указать зону вручную, например:
   zone = "ru-central1-a"
 }
 

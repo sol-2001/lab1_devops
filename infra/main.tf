@@ -19,7 +19,7 @@ resource "yandex_compute_instance" "vm" {
 
   boot_disk {
     initialize_params {
-      image_id = "fd82odtq5h79jo7ffss3" # ID образа Ubuntu 24.04
+      image_id = "fd82odtq5h79jo7ffss3" 
       size     = 20
     }
   }
@@ -33,7 +33,6 @@ resource "yandex_compute_instance" "vm" {
     ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
   }
 
-  # Команды по установке Docker через provisioner
   provisioner "remote-exec" {
     inline = [
       "sudo apt-get update -y",
@@ -66,7 +65,7 @@ resource "yandex_compute_instance" "jenkins_vm" {
 
   boot_disk {
     initialize_params {
-      image_id = "fd82odtq5h79jo7ffss3" # Ubuntu 22.04 например
+      image_id = "fd82odtq5h79jo7ffss3"
       size     = 20
     }
   }
