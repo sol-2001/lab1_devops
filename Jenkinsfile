@@ -43,7 +43,7 @@ pipeline {
                         dir('todo-backend') {
                             sh "docker build -t cr.yandex/crprmuig7ls6e7kr82qn/todo-registry/todo-backend:\${BUILD_NUMBER} ."
                             withCredentials([string(credentialsId: 'yandex-cloud-registry-auth', variable: 'DOCKER_AUTH_TOKEN')]) {
-                                sh "docker login -u token -p \$DOCKER_AUTH_TOKEN cr.yandex"
+                                sh "docker login -u iam -p \$DOCKER_AUTH_TOKEN cr.yandex"
                                 sh "docker push cr.yandex/crprmuig7ls6e7kr82qn/todo-registry/todo-backend:\${BUILD_NUMBER}"
                             }
                         }
@@ -54,7 +54,7 @@ pipeline {
                         dir('todo-frontend') {
                             sh "docker build -t cr.yandex/crprmuig7ls6e7kr82qn/todo-registry/todo-frontend:\${BUILD_NUMBER} ."
                             withCredentials([string(credentialsId: 'yandex-cloud-registry-auth', variable: 'DOCKER_AUTH_TOKEN')]) {
-                                sh "docker login -u token -p \$DOCKER_AUTH_TOKEN cr.yandex"
+                                sh "docker login -u iam -p \$DOCKER_AUTH_TOKEN cr.yandex"
                                 sh "docker push cr.yandex/crprmuig7ls6e7kr82qn/todo-registry/todo-frontend:\${BUILD_NUMBER}"
                             }
                         }
