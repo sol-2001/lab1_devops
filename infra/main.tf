@@ -19,7 +19,7 @@ resource "yandex_compute_instance" "vm" {
 
   boot_disk {
     initialize_params {
-      image_id = "fd82odtq5h79jo7ffss3" 
+      image_id = "fd82odtq5h79jo7ffss3" # ID образа Ubuntu 22.04
       size     = 20
     }
   }
@@ -32,27 +32,31 @@ resource "yandex_compute_instance" "vm" {
   metadata = {
     ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
   }
-
-  provisioner "remote-exec" {
-    inline = [
-      "sudo apt-get update -y",
-      "sudo apt-get install -y apt-transport-https ca-certificates curl gnupg lsb-release",
-      "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg",
-      "echo \"deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable\" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null",
-      "sudo apt-get update -y",
-      "sudo apt-get install -y docker-ce docker-ce-cli containerd.io",
-      "sudo usermod -aG docker ubuntu"
-    ]
+  
+  provisioner "file" {
+    source      = "/home/danil/key.json"
+    destination = "/home/ubuntu/service-account-key.json"
 
     connection {
-      host        = yandex_compute_instance.vm.network_interface.0.nat_ip_address
+      host        = self.network_interface[0].nat_ip_address
       type        = "ssh"
       user        = "ubuntu"
       private_key = file("~/.ssh/id_rsa")
     }
   }
-}
 
+   provisioner "file" {
+    source      = "/home/danil/IdeaProjects/todo-project/docker-compose.yml"
+    destination = "/home/ubuntu/docker-compose.yml"
+
+    connection {
+      host        = self.network_interface[0].nat_ip_address
+      type        = "ssh"
+      user        = "ubuntu"
+      private_key = file("~/.ssh/id_rsa")
+  }
+}
+}
 
 resource "yandex_compute_instance" "jenkins_vm" {
   name = "jenkins-vm"
@@ -78,4 +82,17 @@ resource "yandex_compute_instance" "jenkins_vm" {
   metadata = {
     ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
   }
+  
+  provisioner "file" {
+    source      = "/home/danil/key.json"
+    destination = "/home/ubuntu/service-account-key.json"
+
+    connection {
+      host        = self.network_interface[0].nat_ip_address
+      type        = "ssh"
+      user        = "ubuntu"
+      private_key = file("~/.ssh/id_rsa")
+    }
+  }
 }
+
