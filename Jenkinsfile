@@ -41,20 +41,22 @@ pipeline {
                 stage('Backend Docker Image') {
                     steps {
                         dir('todo-backend') {
-                            sh """
-                            docker build -t cr.yandex/crprmuig7ls6e7kr82qn/todo-registry/todo-backend:${BUILD_NUMBER} .
-                            docker push cr.yandex/crprmuig7ls6e7kr82qn/todo-registry/todo-backend:${BUILD_NUMBER}
-                            """
+                            sh "docker build -t cr.yandex/crprmuig7ls6e7kr82qn/todo-registry/todo-backend:\${BUILD_NUMBER} ."
+                            withCredentials([string(credentialsId: 'yandex-cloud-registry-auth', variable: 'DOCKER_AUTH_TOKEN')]) {
+                                sh "docker login -u token -p \$DOCKER_AUTH_TOKEN cr.yandex"
+                                sh "docker push cr.yandex/crprmuig7ls6e7kr82qn/todo-registry/todo-backend:\${BUILD_NUMBER}"
+                            }
                         }
                     }
                 }
                 stage('Frontend Docker Image') {
                     steps {
                         dir('todo-frontend') {
-                            sh """
-                            docker build -t cr.yandex/crprmuig7ls6e7kr82qn/todo-registry/todo-frontend:${BUILD_NUMBER} .
-                            docker push cr.yandex/crprmuig7ls6e7kr82qn/todo-registry/todo-frontend:${BUILD_NUMBER}
-                            """
+                            sh "docker build -t cr.yandex/crprmuig7ls6e7kr82qn/todo-registry/todo-frontend:\${BUILD_NUMBER} ."
+                            withCredentials([string(credentialsId: 'yandex-cloud-registry-auth', variable: 'DOCKER_AUTH_TOKEN')]) {
+                                sh "docker login -u token -p \$DOCKER_AUTH_TOKEN cr.yandex"
+                                sh "docker push cr.yandex/crprmuig7ls6e7kr82qn/todo-registry/todo-frontend:\${BUILD_NUMBER}"
+                            }
                         }
                     }
                 }
@@ -62,4 +64,3 @@ pipeline {
         }
     }
 }
-
