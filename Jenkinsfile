@@ -52,8 +52,8 @@ pipeline {
                     steps {
                         dir('todo-frontend') {
                             sh """
-                            docker build -t cr.yandex/crprmuig7ls6e7kr82qn/todo-registry/todo-frontend:${BUILD_NUMBER} .
-                            docker push cr.yandex/crprmuig7ls6e7kr82qn/todo-registry/todo-frontend:${BUILD_NUMBER}
+                            docker build -t cr.yandex/crprmuig7ls6e7kr82qn/todo-registry/todo-registry/todo-frontend:${BUILD_NUMBER} .
+                            docker push cr.yandex/crprmuig7ls6e7kr82qn/todo-registry/todo-registry/todo-frontend:${BUILD_NUMBER}
                             """
                         }
                     }
