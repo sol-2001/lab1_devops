@@ -1,5 +1,5 @@
 resource "yandex_vpc_network" "default" {
-  name = "default-network"
+  name = "default"
 }
 
 resource "yandex_vpc_subnet" "default" {
