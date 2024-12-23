@@ -1,5 +1,5 @@
 resource "yandex_vpc_network" "default" {
-  name = "default"
+  name = "default-network"
 }
 
 resource "yandex_vpc_subnet" "default" {
@@ -19,7 +19,7 @@ resource "yandex_compute_instance" "vm" {
 
   boot_disk {
     initialize_params {
-      image_id = "fd82odtq5h79jo7ffss3" # ID образа Ubuntu 22.04
+      image_id = "fd82odtq5h79jo7ffss3"
       size     = 20
     }
   }
@@ -32,7 +32,7 @@ resource "yandex_compute_instance" "vm" {
   metadata = {
     ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
   }
-  
+
   provisioner "file" {
     source      = "/home/danil/key.json"
     destination = "/home/ubuntu/service-account-key.json"
@@ -54,8 +54,43 @@ resource "yandex_compute_instance" "vm" {
       type        = "ssh"
       user        = "ubuntu"
       private_key = file("~/.ssh/id_rsa")
+    }
   }
-}
+
+  provisioner "file" {
+    source      = "/home/danil/IdeaProjects/todo-project/install_dev_tools.sh"
+    destination = "/home/ubuntu/install_dev_tools.sh"
+
+    connection {
+      host        = self.network_interface[0].nat_ip_address
+      type        = "ssh"
+      user        = "ubuntu"
+      private_key = file("~/.ssh/id_rsa")
+    }
+  }
+  
+  provisioner "file" {
+    source      = "/home/danil/key.json"
+    destination = "/home/ubuntu/service-account-key.json"
+
+    connection {
+      host        = self.network_interface[0].nat_ip_address
+      type        = "ssh"
+      user        = "ubuntu"
+      private_key = file("~/.ssh/id_rsa")
+    }
+  }
+  provisioner "file" {
+    source      = "/home/danil/IdeaProjects/todo-project/install_docker.sh"
+    destination = "/home/ubuntu/install_docker.sh"
+
+    connection {
+      host        = self.network_interface[0].nat_ip_address
+      type        = "ssh"
+      user        = "ubuntu"
+      private_key = file("~/.ssh/id_rsa")
+    }
+  }  
 }
 
 resource "yandex_compute_instance" "jenkins_vm" {
@@ -82,7 +117,7 @@ resource "yandex_compute_instance" "jenkins_vm" {
   metadata = {
     ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
   }
-  
+
   provisioner "file" {
     source      = "/home/danil/key.json"
     destination = "/home/ubuntu/service-account-key.json"
@@ -94,5 +129,28 @@ resource "yandex_compute_instance" "jenkins_vm" {
       private_key = file("~/.ssh/id_rsa")
     }
   }
-}
 
+  provisioner "file" {
+    source      = "/home/danil/IdeaProjects/todo-project/install_jenkins_tools.sh"
+    destination = "/home/ubuntu/install_jenkins_tools.sh"
+
+    connection {
+      host        = self.network_interface[0].nat_ip_address
+      type        = "ssh"
+      user        = "ubuntu"
+      private_key = file("~/.ssh/id_rsa")
+    }
+  }
+  
+   provisioner "file" {
+    source      = "/home/danil/IdeaProjects/todo-project/install_docker.sh"
+    destination = "/home/ubuntu/install_docker.sh"
+
+    connection {
+      host        = self.network_interface[0].nat_ip_address
+      type        = "ssh"
+      user        = "ubuntu"
+      private_key = file("~/.ssh/id_rsa")
+    }
+  }
+}
