@@ -1,4 +1,4 @@
-const API_URL = process.env.REACT_APP_API_URL || 'http://89.169.146.120:8080';
+const API_URL = process.env.REACT_APP_API_URL || 'http://158.160.57.34:8080';
 
 export async function getTasks() {
   const resp = await fetch(`${API_URL}/tasks`);
