@@ -1,7 +1,7 @@
 {
   "version": 4,
   "terraform_version": "1.10.3",
-  "serial": 163,
+  "serial": 156,
   "lineage": "08ba690e-56a1-f639-97ab-96273097e1ae",
   "outputs": {},
   "resources": [
@@ -12,7 +12,6 @@
       "provider": "provider[\"registry.terraform.io/yandex-cloud/yandex\"]",
       "instances": [
         {
-          "status": "tainted",
           "schema_version": 1,
           "attributes": {
             "allow_recreate": null,
@@ -20,8 +19,8 @@
             "boot_disk": [
               {
                 "auto_delete": true,
-                "device_name": "fhmgcl5qoio9q7c7a52g",
-                "disk_id": "fhmgcl5qoio9q7c7a52g",
+                "device_name": "fhmasioj6fsfe0mrmg9a",
+                "disk_id": "fhmasioj6fsfe0mrmg9a",
                 "initialize_params": [
                   {
                     "block_size": 4096,
@@ -37,11 +36,11 @@
                 "mode": "READ_WRITE"
               }
             ],
-            "created_at": "2024-12-29T15:02:38Z",
+            "created_at": "2024-12-23T20:32:05Z",
             "description": "",
             "filesystem": [],
-            "folder_id": "b1gr69its5cpdhigundm",
-            "fqdn": "fhm9vdd9frf3rc1lc7o6.auto.internal",
+            "folder_id": "b1g86p5vb1ntkb2k1877",
+            "fqdn": "fhm5810qpam01p02isqq.auto.internal",
             "gpu_cluster_id": "",
             "hardware_generation": [
               {
@@ -54,8 +53,8 @@
               }
             ],
             "hostname": "",
-            "id": "fhm9vdd9frf3rc1lc7o6",
-            "labels": null,
+            "id": "fhm5810qpam01p02isqq",
+            "labels": {},
             "local_disk": [],
             "maintenance_grace_period": "",
             "maintenance_policy": null,
@@ -76,18 +75,18 @@
               {
                 "dns_record": [],
                 "index": 0,
-                "ip_address": "10.128.0.9",
+                "ip_address": "10.128.0.7",
                 "ipv4": true,
                 "ipv6": false,
                 "ipv6_address": "",
                 "ipv6_dns_record": [],
-                "mac_address": "d0:0d:9f:b5:a9:7e",
+                "mac_address": "d0:0d:54:04:1a:ca",
                 "nat": true,
                 "nat_dns_record": [],
-                "nat_ip_address": "89.169.159.72",
+                "nat_ip_address": "51.250.11.28",
                 "nat_ip_version": "IPV4",
                 "security_group_ids": [],
-                "subnet_id": "e9bb4hliqrgq1ivm2gor"
+                "subnet_id": "e9br9e2fd613206ghq0h"
               }
             ],
             "placement_policy": [
@@ -120,8 +119,8 @@
           "sensitive_attributes": [],
           "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjozMDAwMDAwMDAwMDAsImRlbGV0ZSI6MzAwMDAwMDAwMDAwLCJ1cGRhdGUiOjMwMDAwMDAwMDAwMH0sInNjaGVtYV92ZXJzaW9uIjoiMSJ9",
           "dependencies": [
-            "yandex_vpc_network.default1",
-            "yandex_vpc_subnet.default1"
+            "yandex_vpc_network.default",
+            "yandex_vpc_subnet.default"
           ]
         }
       ]
@@ -129,20 +128,22 @@
     {
       "mode": "managed",
       "type": "yandex_vpc_network",
-      "name": "default1",
+      "name": "default",
       "provider": "provider[\"registry.terraform.io/yandex-cloud/yandex\"]",
       "instances": [
         {
           "schema_version": 0,
           "attributes": {
-            "created_at": "2024-12-29T15:02:34Z",
-            "default_security_group_id": "enp905bh0jt2bhieet4k",
+            "created_at": "2024-12-23T20:05:22Z",
+            "default_security_group_id": "enpbp0lt39hhcaarif62",
             "description": "",
-            "folder_id": "b1gr69its5cpdhigundm",
-            "id": "enpie7dqu5ph8uvb6j4o",
+            "folder_id": "b1g86p5vb1ntkb2k1877",
+            "id": "enp609gcpbhh37hucl4a",
             "labels": {},
-            "name": "default1-network",
-            "subnet_ids": [],
+            "name": "default-network",
+            "subnet_ids": [
+              "e9br9e2fd613206ghq0h"
+            ],
             "timeouts": null
           },
           "sensitive_attributes": [],
@@ -153,20 +154,20 @@
     {
       "mode": "managed",
       "type": "yandex_vpc_subnet",
-      "name": "default1",
+      "name": "default",
       "provider": "provider[\"registry.terraform.io/yandex-cloud/yandex\"]",
       "instances": [
         {
           "schema_version": 0,
           "attributes": {
-            "created_at": "2024-12-29T15:02:37Z",
+            "created_at": "2024-12-23T20:05:24Z",
             "description": "",
             "dhcp_options": [],
-            "folder_id": "b1gr69its5cpdhigundm",
-            "id": "e9bb4hliqrgq1ivm2gor",
+            "folder_id": "b1g86p5vb1ntkb2k1877",
+            "id": "e9br9e2fd613206ghq0h",
             "labels": {},
-            "name": "default1-subnet",
-            "network_id": "enpie7dqu5ph8uvb6j4o",
+            "name": "default-subnet",
+            "network_id": "enp609gcpbhh37hucl4a",
             "route_table_id": "",
             "timeouts": null,
             "v4_cidr_blocks": [
@@ -178,7 +179,7 @@
           "sensitive_attributes": [],
           "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAsImRlbGV0ZSI6MTgwMDAwMDAwMDAwLCJ1cGRhdGUiOjE4MDAwMDAwMDAwMH19",
           "dependencies": [
-            "yandex_vpc_network.default1"
+            "yandex_vpc_network.default"
           ]
         }
       ]

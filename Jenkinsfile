@@ -42,8 +42,8 @@ pipeline {
                     steps {
                         dir('todo-backend') {
                             sh """
-                            docker build -t cr.yandex/crp1efbjf0b6dueebfto/todo-registry/todo-backend:${BUILD_NUMBER} .
-                            docker push cr.yandex/crp1efbjf0b6dueebfto/todo-registry/todo-backend:${BUILD_NUMBER}
+                            docker build -t cr.yandex/crp66ar698vs0sm2fcr5/todo-registry/todo-backend:${BUILD_NUMBER} .
+                            docker push cr.yandex/crp66ar698vs0sm2fcr5/todo-registry/todo-backend:${BUILD_NUMBER}
                             """
                         }
                     }
@@ -52,8 +52,8 @@ pipeline {
                     steps {
                         dir('todo-frontend') {
                             sh """
-                            docker build -t cr.yandex/crp1efbjf0b6dueebfto/todo-registry/todo-frontend:${BUILD_NUMBER} .
-                            docker push cr.yandex/crp1efbjf0b6dueebfto/todo-registry/todo-frontend:${BUILD_NUMBER}
+                            docker build -t cr.yandex/crp66ar698vs0sm2fcr5/todo-registry/todo-frontend:${BUILD_NUMBER} .
+                            docker push cr.yandex/crp66ar698vs0sm2fcr5/todo-registry/todo-frontend:${BUILD_NUMBER}
                             """
                         }
                     }

@@ -11,7 +11,7 @@ terraform {
 provider "yandex" {
   service_account_key_file = "/home/danil/key.json"
   cloud_id  = "b1g3b76i0s0742l6fm44"
-  folder_id = "b1g86p5vb1ntkb2k1877"
+  folder_id = "b1gr69its5cpdhigundm"
   zone = "ru-central1-a"
 }
 
