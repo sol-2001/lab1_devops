@@ -41,20 +41,22 @@ pipeline {
                 stage('Backend Docker Image') {
                     steps {
                         dir('todo-backend') {
-                            sh """
-                            docker build -t cr.yandex/crp66ar698vs0sm2fcr5/todo-registry/todo-backend:${BUILD_NUMBER} .
-                            docker push cr.yandex/crp66ar698vs0sm2fcr5/todo-registry/todo-backend:${BUILD_NUMBER}
-                            """
+                            script {
+                                def backend_image_name = "cr.yandex/crp66ar698vs0sm2fcr5/todo-registry/todo-backend"
+                                sh "docker build -t ${backend_image_name}:${BUILD_NUMBER} ."
+                                sh "docker push ${backend_image_name}:${BUILD_NUMBER}"
+                            }
                         }
                     }
                 }
                 stage('Frontend Docker Image') {
                     steps {
                         dir('todo-frontend') {
-                            sh """
-                            docker build -t cr.yandex/crp66ar698vs0sm2fcr5/todo-registry/todo-frontend:${BUILD_NUMBER} .
-                            docker push cr.yandex/crp66ar698vs0sm2fcr5/todo-registry/todo-frontend:${BUILD_NUMBER}
-                            """
+                            script {
+                                def frontend_image_name = "cr.yandex/crp66ar698vs0sm2fcr5/todo-registry/todo-frontend"
+                                sh "docker build -t ${frontend_image_name}:${BUILD_NUMBER} ."
+                                sh "docker push ${frontend_image_name}:${BUILD_NUMBER}"
+                            }
                         }
                     }
                 }
@@ -62,4 +64,3 @@ pipeline {
         }
     }
 }
-
