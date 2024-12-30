@@ -60,6 +60,22 @@ pipeline {
                         }
                     }
                 }
+                stage('Update .env File') {
+            	    steps {
+                       script {
+                    		sh '''
+                      		echo "Updating BUILDERNUMBER in /home/ubuntu/.env"
+                      		awk -v build_number="${BUILD_NUMBER}" '
+                        	BEGIN { found=0 }
+                        	/^BUILDERNUMBER=/ { print "BUILDERNUMBER=" build_number; found=1; next }
+                        	{ print }
+                        	END { if (!found) print "BUILDERNUMBER=" build_number }
+                      		' /home/ubuntu/.env > /home/ubuntu/.env.tmp && mv /home/ubuntu/.env.tmp /home/ubuntu/.env
+                    		'''
+                }
+            }
+        }
+                
             }
         }
     }
