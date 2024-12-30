@@ -64,17 +64,13 @@ pipeline {
             	    steps {
                        script {
                     		sh '''
-                      		echo "Updating BUILDERNUMBER in /home/ubuntu/.env"
-                      		awk -v build_number="${BUILD_NUMBER}" '
-                        	BEGIN { found=0 }
-                        	/^BUILDERNUMBER=/ { print "BUILDERNUMBER=" build_number; found=1; next }
-                        	{ print }
-                        	END { if (!found) print "BUILDERNUMBER=" build_number }
-                      		' /home/ubuntu/.env > /home/ubuntu/.env.tmp && mv /home/ubuntu/.env.tmp /home/ubuntu/.env
+					echo \"Updating BUILDERNUMBER in /home/ubuntu/.env\"
+					sed -i 's|^BUILDERNUMBER=.*|BUILDERNUMBER=${BUILD_NUMBER}|' /home/ubuntu/.env \\
+  					|| echo 'BUILDERNUMBER=${BUILD_NUMBER}' >> /home/ubuntu/.env
                     		'''
-                }
-            }
-        }
+                		}
+            		}
+        	}
                 
             }
         }
