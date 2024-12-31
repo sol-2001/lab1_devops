@@ -61,17 +61,17 @@ pipeline {
                     }
                 }
                 stage('Update .env File') {
-            	    steps {
-                       script {
-                    		sh '''
-					echo \"Updating BUILDERNUMBER in /home/ubuntu/.env\"
-					sed -i 's|^BUILDERNUMBER=.*|BUILDERNUMBER=${BUILD_NUMBER}|' /home/ubuntu/.env \\
-  					|| echo 'BUILDERNUMBER=${BUILD_NUMBER}' >> /home/ubuntu/.env
-                    		'''
-                		}
-            		}
-        	}
-                
+  			steps {
+    				script {
+      					sh """
+        				echo "Updating BUILDERNUMBER in /home/ubuntu/.env"
+
+        				sed -i "s|^BUILDERNUMBER=.*|BUILDERNUMBER=${BUILD_NUMBER}|" /home/ubuntu/.env \\
+          				|| echo "BUILDERNUMBER=${BUILD_NUMBER}" >> /home/ubuntu/.env
+      					"""
+    				}
+  			}
+		}
             }
         }
     }
