@@ -65,13 +65,10 @@ pipeline {
     				script {
       					sh """
         				echo "Updating BUILDERNUMBER in /home/ubuntu/.env"
-        				
-        				sudo chown jenkins:jenkins /home/ubuntu/.env
-        				sudo chmod 664 /home/ubuntu/.env
-        				
+
         				sed -i '/^BUILDERNUMBER=/d' /home/ubuntu/.env
-        				sed -i "s|^BUILDERNUMBER=.*|BUILDERNUMBER=${BUILD_NUMBER}|" /home/ubuntu/.env \\
-          				|| echo "BUILDERNUMBER=${BUILD_NUMBER}" >> /home/ubuntu/.env
+
+        				echo "BUILDERNUMBER=${BUILD_NUMBER}" >> /home/ubuntu/.env
       					"""
     				}
   			}
