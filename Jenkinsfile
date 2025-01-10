@@ -66,7 +66,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                        sed -i 's/^VERSION=.*/VERSION=${BUILD_NUMBER}/' ~/.env
+                        sed -i 's/^VERSION=.*/VERSION=${BUILD_NUMBER}/' /home/ubuntu/.env
                     """
                 }
             }
