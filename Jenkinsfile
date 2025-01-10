@@ -60,19 +60,6 @@ pipeline {
                         }
                     }
                 }
-                stage('Update .env File') {
-  			steps {
-    				script {
-      					sh """
-        				echo "Updating BUILDERNUMBER in /home/ubuntu/.env"
-
-        				sed -i '/^BUILDERNUMBER=/d' /home/ubuntu/.env
-
-        				echo "BUILDERNUMBER=${BUILD_NUMBER}" >> /home/ubuntu/.env
-      					"""
-    				}
-  			}
-		}
             }
         }
     }
