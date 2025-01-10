@@ -62,5 +62,14 @@ pipeline {
                 }
             }
         }
+        stage('Update .env') {
+            steps {
+                script {
+                    sh """
+                        sudo sed -i 's/^VERSION=.*/VERSION=${BUILD_NUMBER}/' .env
+                    """
+                }
+            }
+        }
     }
 }
