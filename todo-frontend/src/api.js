@@ -1,4 +1,4 @@
-const API_URL = process.env.REACT_APP_API_URL || 'http://51.250.1.150:8081';
+const API_URL = 'http://51.250.1.150:8081';
 
 export async function getTasks() {
   const resp = await fetch(`${API_URL}/tasks`);
