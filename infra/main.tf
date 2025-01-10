@@ -1,11 +1,11 @@
-resource "yandex_vpc_network" "default1" {
-  name = "default1-network"
+resource "yandex_vpc_network" "default" {
+  name = "default-network"
 }
 
-resource "yandex_vpc_subnet" "default1" {
-  name           = "default1-subnet"
+resource "yandex_vpc_subnet" "default" {
+  name           = "default-subnet"
   zone           = "ru-central1-a"
-  network_id     = yandex_vpc_network.default1.id
+  network_id     = yandex_vpc_network.default.id
   v4_cidr_blocks = ["10.128.0.0/24"]
 }
 
@@ -25,7 +25,7 @@ resource "yandex_compute_instance" "vm" {
   }
 
   network_interface {
-    subnet_id = yandex_vpc_subnet.default1.id
+    subnet_id = yandex_vpc_subnet.default.id
     nat       = true
   }
 

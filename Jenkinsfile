@@ -42,7 +42,7 @@ pipeline {
                     steps {
                         dir('todo-backend') {
                             script {
-                                def backend_image_name = "cr.yandex/crp66ar698vs0sm2fcr5/todo-registry/todo-backend"
+                                def backend_image_name = "cr.yandex/crpe879bq7ptaqnei98m/todo-registry/todo-backend"
                                 sh "docker build -t ${backend_image_name}:${BUILD_NUMBER} ."
                                 sh "docker push ${backend_image_name}:${BUILD_NUMBER}"
                             }
@@ -53,7 +53,7 @@ pipeline {
                     steps {
                         dir('todo-frontend') {
                             script {
-                                def frontend_image_name = "cr.yandex/crp66ar698vs0sm2fcr5/todo-registry/todo-frontend"
+                                def frontend_image_name = "cr.yandex/crpe879bq7ptaqnei98m/todo-registry/todo-frontend"
                                 sh "docker build -t ${frontend_image_name}:${BUILD_NUMBER} ."
                                 sh "docker push ${frontend_image_name}:${BUILD_NUMBER}"
                             }
