@@ -74,9 +74,7 @@ pipeline {
 			sed -i "s/^VERSION=.*/VERSION=${BUILD_NUMBER}/" /tmp/.env_jenkins
 	
 			# Копируем обратно, перезаписывая оригинал
-			sudo cp /tmp/.env_jenkins /home/ubuntu/.env
-			sudo chown ubuntu:ubuntu /home/ubuntu/.env # Восстанавливаем владельца и группу
-			sudo chmod 664 /home/ubuntu/.env       # Восстанавливаем права доступа
+			cp /tmp/.env_jenkins /home/ubuntu/.env
 	
 			rm /tmp/.env_jenkins # Удаляем временный файл
                     """
