@@ -66,7 +66,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                        sudo sed -i 's/^VERSION=.*/VERSION=${BUILD_NUMBER}/' .env
+                        sed -i 's/^VERSION=.*/VERSION=${BUILD_NUMBER}/' .env
                     """
                 }
             }
