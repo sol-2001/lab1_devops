@@ -66,7 +66,20 @@ pipeline {
             steps {
                 script {
                     sh """
-                        sed -i 's/^VERSION=.*/VERSION=${BUILD_NUMBER}/' /home/ubuntu/.env
+                        ENV_COPY="/tmp/.env_jenkins" # Временный файл
+
+			# Копируем файл для редактирования
+			cp /home/ubuntu/.env ${ENV_COPY}
+
+			# Обновляем переменную VERSION в копии
+			sed -i "s/^VERSION=.*/VERSION=${BUILD_NUMBER}/" ${ENV_COPY}
+	
+			# Копируем обратно, перезаписывая оригинал
+			sudo cp ${ENV_COPY} /home/ubuntu/.env
+			sudo chown ubuntu:ubuntu /home/ubuntu/.env # Восстанавливаем владельца и группу
+			sudo chmod 664 /home/ubuntu/.env       # Восстанавливаем права доступа
+	
+			rm ${ENV_COPY} # Удаляем временный файл
                     """
                 }
             }
