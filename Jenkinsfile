@@ -66,7 +66,6 @@ pipeline {
             steps {
                 script {
                     sh """
-
 			# Копируем файл для редактирования
 			cp /home/ubuntu/.env /tmp/.env_jenkins
 
