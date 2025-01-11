@@ -1,4 +1,4 @@
-const API_URL = 'http://51.250.7.0:8081';
+const API_URL = 'http://62.84.119.218:8081';
 
 export async function getTasks() {
   const resp = await fetch(`${API_URL}/tasks`);
