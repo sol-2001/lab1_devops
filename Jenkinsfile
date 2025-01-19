@@ -43,8 +43,8 @@ pipeline {
                         dir('todo-backend') {
                             script {
                                 def backend_image_name = "cr.yandex/crpp8odc6temeugiivj2/todo-registry/todo-backend"
-                                sh "docker build -t ${backend_image_name}:${BUILD_NUMBER} ."
-                                sh "docker push ${backend_image_name}:${BUILD_NUMBER}"
+                                sh "docker build -t ${backend_image_name}:latest ."
+                                sh "docker push ${backend_image_name}:latest"
                             }
                         }
                     }
@@ -54,8 +54,8 @@ pipeline {
                         dir('todo-frontend') {
                             script {
                                 def frontend_image_name = "cr.yandex/crpp8odc6temeugiivj2/todo-registry/todo-frontend"
-                                sh "docker build -t ${frontend_image_name}:${BUILD_NUMBER} ."
-                                sh "docker push ${frontend_image_name}:${BUILD_NUMBER}"
+                                sh "docker build -t ${frontend_image_name}:latest ."
+                                sh "docker push ${frontend_image_name}:latest"
                             }
                         }
                     }

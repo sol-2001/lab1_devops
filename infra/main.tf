@@ -152,6 +152,7 @@ resource "yandex_kubernetes_node_group" "todo_k8s_node_group" {
     }
     network_interface {
       subnet_ids = [yandex_vpc_subnet.default.id]
+      nat        = true
     }
   }
 
