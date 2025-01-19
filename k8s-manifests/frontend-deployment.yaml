@@ -24,7 +24,7 @@ spec:
       containers:
         - env:
             - name: REACT_APP_API_URL
-              value: http://backend:8081
+              value: http://backend:8081/tasks
           image: cr.yandex/crpp8odc6temeugiivj2/todo-registry/todo-frontend:latest
           name: frontend
           ports:
