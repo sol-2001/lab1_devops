@@ -13,7 +13,6 @@ pipeline {
         stage('Test Frontend') {
             steps {
                 dir('todo-frontend') {
-                    sh 'rm -rf node_modules'
                     sh 'npm install'
                     sh 'npm test -- --watchAll=false'
                 }
