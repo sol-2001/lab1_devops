@@ -14,13 +14,13 @@ resource "yandex_compute_instance" "vm" {
 
   resources {
     cores  = 2
-    memory = 2
+    memory = 4
   }
 
   boot_disk {
     initialize_params {
       image_id = "fd82odtq5h79jo7ffss3"
-      size     = 20
+      size     = 50
     }
   }
 
@@ -68,7 +68,18 @@ resource "yandex_compute_instance" "vm" {
       private_key = file("~/.ssh/id_rsa")
     }
   }
+  
+  provisioner "file" {
+    source      = "/home/danil/IdeaProjects/todo-project/docker-compose-sonar.yml"
+    destination = "/home/ubuntu/docker-compose.yml"
 
+    connection {
+      host        = self.network_interface[0].nat_ip_address
+      type        = "ssh"
+      user        = "ubuntu"
+      private_key = file("~/.ssh/id_rsa")
+    }
+}
   provisioner "file" {
     source      = "/home/danil/IdeaProjects/todo-project/install_dev_tools.sh"
     destination = "/home/ubuntu/install_dev_tools.sh"
