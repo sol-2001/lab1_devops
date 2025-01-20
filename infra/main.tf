@@ -1,4 +1,4 @@
-	resource "yandex_vpc_network" "default" {
+resource "yandex_vpc_network" "default" {
   name = "default-network"
 }
 
@@ -128,6 +128,7 @@ resource "yandex_kubernetes_cluster" "todo_k8s_cluster" {
     public_ip     = true
     zonal {
       zone = "ru-central1-a"
+      subnet_id = yandex_vpc_subnet.default.id
     }
     maintenance_policy {
       auto_upgrade = true
