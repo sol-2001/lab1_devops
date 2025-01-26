@@ -5,7 +5,7 @@ plugins {
 
 	id("jacoco")
 
-	id("org.sonarqube") version "3.5.0.2730"
+	id("org.sonarqube") version "4.3.0.3225"
 }
 
 group = "com.example"
@@ -67,7 +67,13 @@ sonarqube {
 		property("sonar.projectName", "Todo Backend")
 
 		// Пути к JaCoCo-отчетам, чтобы Sonar учитывал покрытие
-		property("sonar.coverage.jacoco.xmlReportPaths",
-			"${buildDir}/reports/jacoco/test/xml/report.xml")
+		property(
+			"sonar.coverage.jacoco.xmlReportPaths",
+			layout.buildDirectory.file("reports/jacoco/test/xml/report.xml").get().asFile.absolutePath
+		)
 	}
+}
+
+tasks.sonarqube {
+	dependsOn(tasks.jacocoTestReport)
 }
