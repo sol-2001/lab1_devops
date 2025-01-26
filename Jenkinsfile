@@ -5,7 +5,33 @@ pipeline {
         stage('Test Backend') {
             steps {
                 dir('todo-backend') {
-                    sh './gradlew test'
+                    // Сразу запускаем тесты + сбор покрытия (jacocoTestReport)
+                    sh './gradlew clean test jacocoTestReport'
+                }
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                dir('todo-backend') {
+                    // Подключаемся к SonarQube из Jenkins (считает env.SONAR_HOST_URL, env.SONAR_AUTH_TOKEN)
+                    withSonarQubeEnv('MySonarQube') {
+                        // Запускаем задачу 'sonarqube', которая опубликует анализ в SonarQube
+                        sh './gradlew sonarqube'
+                    }
+                }
+            }
+        }
+
+        stage('Quality Gate') {
+            steps {
+                script {
+                    // Ждём, пока SonarQube обработает отчёт
+                    def qg = waitForQualityGate() 
+                    println "Quality Gate status: ${qg.status}"
+                    if (qg.status != 'OK') {
+                        error "SonarQube Quality Gate failed: ${qg.status}"
+                    }
                 }
             }
         }
@@ -14,6 +40,7 @@ pipeline {
             steps {
                 dir('todo-frontend') {
                     sh 'npm install'
+                    // Запуск тестов фронта (Jest, например)
                     sh 'npm test -- --watchAll=false'
                 }
             }
@@ -64,3 +91,4 @@ pipeline {
         }
     }
 }
+
