@@ -35,7 +35,7 @@ function App() {
     <div style={{ margin: "20px" }}>
       <h1>Todo List</h1>
       <div>
-        <input value={newTitle} onChange={e => setNewTitle(e.target.value)} placeholder="Добавить новую задачу"/>
+        <input value={newTitle} onChange={e => setNewTitle(e.target.value)} placeholder="Новая таска"/>
         <button onClick={addTask}>Add</button>
       </div>
       <ul>
