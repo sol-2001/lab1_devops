@@ -98,7 +98,10 @@ pipeline {
 
                     sh """
                       kubectl apply -f k8s-manifests/
-                      kubectl rollout restart -f k8s-manifests/
+                      
+                      kubectl rollout restart deployment/backend
+                      kubectl rollout restart deployment/db
+                      kubectl rollout restart deployment/frontend
                     """
                     sh """
                       kubectl rollout status deployment/backend
