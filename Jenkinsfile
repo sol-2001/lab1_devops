@@ -94,11 +94,7 @@ pipeline {
             }
             steps {
                 script {
-                    #sh """
-                      # yc container cluster get-credentials todo-k8s-cluster --external --folder-id b1gtj94ev5rb7r3b7fvm
-                      # Или используем уже настроенный KUBECONFIG
-                      # kubectl config set-context --current --namespace=default
-                    #"""
+                    
 
                     sh """
                       kubectl apply -f k8s-manifests/
