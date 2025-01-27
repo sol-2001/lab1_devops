@@ -2,10 +2,10 @@ pipeline {
     agent any
 
     stages {
+
         stage('Test Backend') {
             steps {
                 dir('todo-backend') {
-
                     sh './gradlew clean test jacocoTestReport'
                 }
             }
@@ -14,9 +14,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 dir('todo-backend') {
-
                     withSonarQubeEnv('MySonarQube') {
-
                         sh './gradlew sonarqube'
                     }
                 }
@@ -26,7 +24,6 @@ pipeline {
         stage('Quality Gate') {
             steps {
                 script {
-
                     def qg = waitForQualityGate() 
                     println "Quality Gate status: ${qg.status}"
                     if (qg.status != 'OK') {
@@ -40,7 +37,6 @@ pipeline {
             steps {
                 dir('todo-frontend') {
                     sh 'npm install'
-
                     sh 'npm test -- --watchAll=false'
                 }
             }
@@ -88,6 +84,41 @@ pipeline {
                     }
                 }
             }
+        }
+
+        stage('Deploy to Kubernetes') {
+            when {
+                expression {
+                    return true
+                }
+            }
+            steps {
+                script {
+                    // Если нужно, подтягиваем kubeconfig через yc CLI (пример):
+                    sh """
+                      yc container cluster get-credentials todo-k8s-cluster --external --folder-id b1gtj94ev5rb7r3b7fvm
+                      # Или используем уже настроенный KUBECONFIG
+                      kubectl config set-context --current --namespace=default
+                    """
+
+                    sh """
+                      kubectl apply -f k8s-manifests/
+                    """
+
+                    // (Опционально) дожидаемся rollout, если нужно убедиться, что деплой запустился:
+                    sh """
+                      kubectl rollout status deployment/todo-backend
+                      kubectl rollout status deployment/todo-frontend
+                    """
+                }
+            }
+        }
+
+    }
+
+    post {
+        always {
+            cleanWs()
         }
     }
 }
