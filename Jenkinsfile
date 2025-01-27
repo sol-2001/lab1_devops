@@ -107,8 +107,8 @@ pipeline {
 
                     // (Опционально) дожидаемся rollout, если нужно убедиться, что деплой запустился:
                     sh """
-                      kubectl rollout status deployment/todo-backend
-                      kubectl rollout status deployment/todo-frontend
+                      kubectl rollout status deployment/backend
+                      kubectl rollout status deployment/frontend
                     """
                 }
             }
