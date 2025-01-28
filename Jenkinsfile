@@ -36,7 +36,7 @@ pipeline {
         stage('Test Frontend') {
             steps {
                 dir('todo-frontend') {
-                    
+                    sh 'npm install'
                     sh 'npm test -- --watchAll=false'
                 }
             }
