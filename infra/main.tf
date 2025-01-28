@@ -13,7 +13,7 @@ resource "yandex_compute_instance" "vm" {
   name = "dev-vm"
 
   resources {
-    cores  = 2
+    cores  = 4
     memory = 4
   }
 
