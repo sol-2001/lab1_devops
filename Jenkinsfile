@@ -2,6 +2,15 @@ pipeline {
     agent any
 
     stages {
+    
+    	stage('Test Frontend') {
+            steps {
+                dir('todo-frontend') {
+                    sh 'npm install'
+                    sh 'npm test -- --watchAll=false'
+                }
+            }
+        }
 
         stage('Test Backend') {
             steps {
@@ -33,14 +42,7 @@ pipeline {
             }
         }
 
-        stage('Test Frontend') {
-            steps {
-                dir('todo-frontend') {
-                    sh 'npm install'
-                    sh 'npm test -- --watchAll=false'
-                }
-            }
-        }
+        
 
         stage('Build Backend') {
             steps {
