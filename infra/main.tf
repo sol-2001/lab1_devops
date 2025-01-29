@@ -14,7 +14,7 @@ resource "yandex_compute_instance" "vm" {
 
   resources {
     cores  = 4
-    memory = 4
+    memory = 8
   }
 
   boot_disk {
