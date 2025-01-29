@@ -130,7 +130,6 @@ resource "yandex_kubernetes_cluster" "todo_k8s_cluster" {
   folder_id   = var.folder_id
   network_id  = yandex_vpc_network.default.id
 
-  # Указываем сервисный аккаунт для узлов кластера
   service_account_id        = var.service_account_id
   node_service_account_id   = var.service_account_id
 
